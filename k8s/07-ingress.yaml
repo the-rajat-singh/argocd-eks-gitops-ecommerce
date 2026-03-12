@@ -18,7 +18,7 @@ spec:
   #   - reasonablestore.yourdomain.com
   #   secretName: reasonable-store-tls
   rules:
-    - host: reasonablestore.yourdomain.com   # ← replace with your domain
+    - host: churu.online   # ← replace with your domain
       http:
         paths:
           - path: /api
