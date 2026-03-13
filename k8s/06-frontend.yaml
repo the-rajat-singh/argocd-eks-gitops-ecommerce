@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: therajatsingh/frontend:v5  # ← replace with your image
+          image: therajatsingh/frontend:v8  # ← replace with your image
           imagePullPolicy: Always
           ports:
             - containerPort: 80

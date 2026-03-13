@@ -24,7 +24,9 @@ spec:
     spec:
       containers:
         - name: backend
-          image: therajatsingh/backend:v2  # ← replace with your image
+          securityContext:
+            runAsUser: 0
+          image: therajatsingh/backend:v6  # ← replace with your image
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -32,6 +34,8 @@ spec:
             - configMapRef:
                 name: app-config
           env:
+            - name: UPLOAD_DIR
+              value: "/app/uploads"
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
