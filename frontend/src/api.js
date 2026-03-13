@@ -26,3 +26,11 @@ export const removeFromCart = (id)          => api.delete(`/cart/${id}`);
 export const clearCart      = (sid)         => api.delete(`/cart/session/${sid}`);
 
 export default api;
+
+// ── Admin API ─────────────────────────────────────────────────
+export const createProduct  = (data)        => api.post('/products', data);
+export const updateProduct  = (id, data)    => api.put(`/products/${id}`, data);
+export const deleteProduct  = (id)          => api.delete(`/products/${id}`);
+export const getQueries     = (params = {}) => api.get('/queries', { params });
+export const updateQueryStatus = (id, status) => api.patch(`/queries/${id}/status`, { status });
+export const deleteGalleryPhoto = (id)      => api.delete(`/gallery/${id}`);

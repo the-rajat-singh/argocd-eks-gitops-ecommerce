@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext, useContext, useCallback } fr
 import { BrowserRouter, Routes, Route, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import * as api from './api';
+import Admin from './Admin';
 import './App.css';
 
 // ── Cart Context ──────────────────────────────────────────────
@@ -454,6 +455,7 @@ export default function App() {
             <Route path="/gallery"  element={<Gallery />} />
             <Route path="/contact"  element={<Contact />} />
             <Route path="/cart"     element={<Cart />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />
