@@ -1,5 +1,8 @@
-# Requires nginx-ingress-controller installed in cluster
-# Install: helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace
+# ============================================================
+# Ingress – works with AWS ELB hostname OR a custom domain
+# ============================================================
+# No host: field = matches ALL hostnames (ELB URL, IP, custom domain).
+# ============================================================
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -7,19 +10,16 @@ metadata:
   name: reasonable-store-ingress
   namespace: reasonable-store
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # IMPORTANT: No rewrite-target here — it breaks the React SPA
     nginx.ingress.kubernetes.io/proxy-body-size: "15m"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
-    # cert-manager.io/cluster-issuer: "letsencrypt-prod"   # uncomment for HTTPS
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
-  # tls:                                                    # uncomment for HTTPS
-  # - hosts:
-  #   - reasonablestore.yourdomain.com
-  #   secretName: reasonable-store-tls
   rules:
-    - host: churu.online   # ← replace with your domain
-      http:
+    # No host: field → matches ELB URL, IP, and any custom domain
+    - http:
         paths:
           - path: /api
             pathType: Prefix

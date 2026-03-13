@@ -7,18 +7,22 @@ import './App.css';
 // ── Cart Context ──────────────────────────────────────────────
 const CartContext = createContext(null);
 const SESSION_KEY = 'rs_session';
-function getSession() {
-  let s = localStorage.getItem(SESSION_KEY);
-  function generateUUID() {
+
+// generateUUID MUST be outside getSession — works with or without HTTPS
+function generateUUID() {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return crypto.randomUUID();       // HTTPS / localhost
+    return crypto.randomUUID();
   }
-  // Fallback for HTTP (EKS without TLS)
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
-    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
   });
 }
+
+function getSession() {
+  let s = localStorage.getItem(SESSION_KEY);
+  if (!s) { s = generateUUID(); localStorage.setItem(SESSION_KEY, s); }
   return s;
 }
 
@@ -94,7 +98,6 @@ function Home() {
 
   return (
     <>
-      {/* Hero */}
       <section className="hero">
         <div className="hero-text">
           <div className="hero-badge">✨ New Arrivals Every Week</div>
@@ -122,7 +125,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Categories */}
       <section className="categories-section" id="categories">
         <div className="section-label">Browse</div>
         <div className="section-title">All Categories</div>
@@ -138,7 +140,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Featured Products */}
       <section className="products-section">
         <div className="section-label">Featured</div>
         <div className="section-title">Top Picks</div>
@@ -152,7 +153,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Why Us */}
       <section className="whyus-section">
         <div className="section-label center">Why Choose Us</div>
         <div className="section-title center">The Reasonable Difference</div>
@@ -272,11 +272,11 @@ function Gallery() {
   };
 
   const defaultPhotos = [
-    { id: 'd1', url: null, label: 'Store Front', emoji: '🛒', bg: 'linear-gradient(135deg,#fde8e8,#fdd5b1)' },
+    { id: 'd1', url: null, label: 'Store Front',      emoji: '🛒', bg: 'linear-gradient(135deg,#fde8e8,#fdd5b1)' },
     { id: 'd2', url: null, label: 'Toiletries Aisle', emoji: '🧴', bg: 'linear-gradient(135deg,#d4f1e4,#b3e8d4)' },
     { id: 'd3', url: null, label: 'Clothing Section', emoji: '👗', bg: 'linear-gradient(135deg,#ede8f9,#ddd3f5)' },
-    { id: 'd4', url: null, label: 'Beauty Corner', emoji: '💄', bg: 'linear-gradient(135deg,#fff3cd,#ffe0a0)' },
-    { id: 'd5', url: null, label: 'Toys Section', emoji: '🧸', bg: 'linear-gradient(135deg,#fce7f3,#f8c5e3)' },
+    { id: 'd4', url: null, label: 'Beauty Corner',    emoji: '💄', bg: 'linear-gradient(135deg,#fff3cd,#ffe0a0)' },
+    { id: 'd5', url: null, label: 'Toys Section',     emoji: '🧸', bg: 'linear-gradient(135deg,#fce7f3,#f8c5e3)' },
   ];
 
   const allPhotos = [...defaultPhotos, ...photos];
@@ -431,7 +431,7 @@ function Footer() {
           <div className="logo">Reasonable<span>Store</span></div>
           <p>Your trusted one-stop shop for quality products at honest prices.</p>
         </div>
-        <div className="footer-col"><h5>Categories</h5><ul>{['Toiletries','Makeup','Men\'s Clothing','Lingerie','Toys'].map(c=><li key={c}><Link to={`/products?category=${c.toLowerCase()}`}>{c}</Link></li>)}</ul></div>
+        <div className="footer-col"><h5>Categories</h5><ul>{['Toiletries','Makeup',"Men's Clothing",'Lingerie','Toys'].map(c=><li key={c}><Link to={`/products?category=${c.toLowerCase()}`}>{c}</Link></li>)}</ul></div>
         <div className="footer-col"><h5>Info</h5><ul>{['About Us','Privacy Policy','Return Policy','Delivery Info'].map(c=><li key={c}><a href="#top">{c}</a></li>)}</ul></div>
         <div className="footer-col"><h5>Contact</h5><ul><li><a href="mailto:info@reasonablestore.pk">📧 info@reasonablestore.pk</a></li><li><a href="tel:+923000000000">📞 +92 300 0000000</a></li></ul></div>
       </div>
