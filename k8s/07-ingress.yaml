@@ -1,9 +1,3 @@
-# ============================================================
-# Ingress – works with AWS ELB hostname OR a custom domain
-# ============================================================
-# No host: field = matches ALL hostnames (ELB URL, IP, custom domain).
-# ============================================================
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -14,34 +8,38 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: "15m"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
-    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # Enables cert-manager
 spec:
   ingressClassName: nginx
+  tls:  # Add this section for SSL
+  - hosts:
+    - churu.online  # Replace with your actual domain
+    secretName: reasonable-store-tls  # Cert-manager will create this secret
   rules:
-    # No host: field → matches ELB URL, IP, and any custom domain
-    - http:
-        paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: backend-service
-                port:
-                  number: 5000
-          
-          - path: /uploads
-            pathType: Prefix
-            backend:
-              service:
-                name: backend-service
-                port:
-                  number: 5000
+  - host: churu.online  # Specify the host (required for SSL)
+    http:
+      paths:
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: backend-service
+              port:
+                number: 5000
+        
+        - path: /uploads
+          pathType: Prefix
+          backend:
+            service:
+              name: backend-service
+              port:
+                number: 5000
 
-         
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend-service
-                port:
-                  number: 80
+       
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: frontend-service
+              port:
+                number: 80
