@@ -1,27 +1,13 @@
 {
   "name": "reasonable-store-backend",
-  "version": "1.0.0",
-  "description": "Reasonable Store REST API",
+  "version": "2.0.0",
   "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
-  },
+  "scripts": { "start": "node src/index.js", "dev": "nodemon src/index.js" },
   "dependencies": {
-    "express": "^4.18.2",
-    "pg": "^8.11.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.7",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
-    "express-validator": "^7.0.1",
-    "helmet": "^7.1.0",
-    "morgan": "^1.10.0",
-    "uuid": "^9.0.1"
+    "express": "^4.18.2", "pg": "^8.11.3", "cors": "^2.8.5",
+    "dotenv": "^16.3.1", "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.7", "bcryptjs": "^2.4.3",
+    "helmet": "^7.1.0", "morgan": "^1.10.0", "uuid": "^9.0.1"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
-  }
+  "devDependencies": { "nodemon": "^3.0.2" }
 }
