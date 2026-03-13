@@ -37,13 +37,7 @@ spec:
                 port:
                   number: 5000
 
-          - path: /admin
-            pathType: Prefix
-            backend:
-              service:
-                name: admin-service
-                port:
-                  number: 80
+         
           - path: /
             pathType: Prefix
             backend:
