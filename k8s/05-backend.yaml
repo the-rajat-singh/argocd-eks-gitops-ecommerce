@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: therajatsingh/backend:latest  # ← replace with your image
+          image: therajatsingh/backend:v2  # ← replace with your image
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
